@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Empleado</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Empleado</h1>
+
+        <div th:if="${errores}" class="alert alert-danger" th:text="${errores}"></div>
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+
+        <form action="#" th:action="@{/actualizarEmpleado}" th:object="${empleado}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- AQUI VA EL NOMBRE -->
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required>
+                <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
+                    <span th:errors="*{nombre}"></span>
+                </div>
+            </div>
+
+            <!-- AQUI VA EL APELLIDO -->
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" th:field="*{apellido}" class="form-control" required>
+                <div th:if="${#fields.hasErrors('apellido')}" class="text-danger">
+                    <span th:errors="*{apellido}"></span>
+                </div>
+            </div>
+
+            <!-- AQUI VA EL SALARIO -->
+            <div class="form-group">
+                <label for="salario">Salario</label>
+                <input type="number" id="salario" th:field="*{salario}" class="form-control" required>
+                <div th:if="${#fields.hasErrors('salario')}" class="text-danger">
+                    <span th:errors="*{salario}"></span>
+                </div>
+            </div>
+
+            <!-- AQUI ELIJO EL DEPARTAMENTO -->
+            <div class="form-group">
+                <label for="departamento">Departamento</label>
+                <select id="departamento" th:field="*{departamento.id}" class="form-control" required>
+                    <option th:each="dep : ${departamentos}" th:value="${dep.id}" th:text="${dep.nombre}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar Empleado</button>
+            <a href="/listarEmpleados" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
